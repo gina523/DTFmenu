@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "MenuItem": {
+      "title": "Menu Item",
+      "description": "Details of a food or drink item on the menu",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the dish" },
+        "price": { "type": "number", "description": "Price in TWD" },
+        "description": { "type": "string", "description": "Short description of the item" },
+        "category": { "type": "string", "description": "Category like 'Appetizer', 'Main', 'Drink'" },
+        "imageUrl": { "type": "string", "description": "Link to the item image" },
+        "isAvailable": { "type": "boolean", "description": "Availability status" }
+      },
+      "required": ["name", "price", "category", "isAvailable"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "tableNumber": { "type": "string", "description": "Table or seat identification" },
+        "orderType": { "type": "string", "enum": ["dine-in", "takeout"], "description": "Whether the order is for dine-in or takeout" },
+        "status": { "type": "string", "enum": ["pending", "preparing", "served", "cancelled"], "description": "Current status of the order" },
+        "total": { "type": "number", "description": "Total amount paid" },
+        "notes": { "type": "string", "description": "General order remarks" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Order placement time" },
+        "items": {
+          "type": "array",
+          "description": "List of items in the order, including size and per-item notes"
+        }
+      },
+      "required": ["tableNumber", "orderType", "status", "total", "createdAt", "items"]
+    }
+  },
+  "firestore": {
+    "menuItems": {
+      "schema": "MenuItem",
+      "description": "Collection of all menu items"
+    },
+    "orders": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    }
+  }
+}
